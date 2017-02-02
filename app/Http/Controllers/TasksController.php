@@ -32,7 +32,7 @@ class TasksController extends Controller
      */
     public function create()
     {
-        $task = new task;
+       $task = new task;
         
         return view('tasks.create',[
             'task' => $task,
@@ -47,7 +47,12 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'status' => 'required',
+        ]);
+        
         $task = new task;
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
         
@@ -93,7 +98,12 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'status' => 'required',
+        ]);
+
         $task = task::find($id);
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
         
